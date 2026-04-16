@@ -137,7 +137,7 @@ Router (Library-grounded / Hybrid / General)
 LLM Answer Generation
    ↓
 Streamlit UI
-···
+```
 
 ## Tech stack
 Python
