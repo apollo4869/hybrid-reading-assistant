@@ -137,7 +137,9 @@ Router (Library-grounded / Hybrid / General)
 LLM Answer Generation
    ↓
 Streamlit UI
-Tech stack
+···
+
+## Tech stack
 Python
 Sentence Transformers
 ChromaDB
