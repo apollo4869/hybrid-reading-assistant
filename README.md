@@ -140,13 +140,17 @@ Streamlit UI
 ```
 
 ## Tech stack
-Python
-Sentence Transformers
-ChromaDB
-Streamlit
-DeepSeek API (OpenAI-compatible client)
-PyPDF
-Project structure
+
+- **Python**
+- **Sentence Transformers**
+- **ChromaDB**
+- **Streamlit**
+- **DeepSeek API** (OpenAI-compatible client)
+- **PyPDF**
+
+## Project structure
+
+```text
 hybrid-math-reading-assistant/
   data/
   chroma_db/
@@ -157,129 +161,181 @@ hybrid-math-reading-assistant/
   router.py
   requirements.txt
   .env
-File overview
-data/
-Stores the local document library.
-chroma_db/
-Stores the local vector index after ingestion.
-ingest.py
-Loads documents, chunks them, generates embeddings, and stores them in ChromaDB.
-retriever.py
-Retrieves top-k relevant chunks for a query.
-router.py
-Assigns one of the three answer modes based on retrieval strength.
-answerer.py
-Builds context from retrieved chunks and generates the final answer using the LLM API.
-app.py
-Provides the Streamlit interface.
-.env
-Stores API credentials.
-Setup
-1. Clone the repository
+```
+
+### File overview
+
+- `data/`  
+  Local user-provided document library. Not tracked in the repository.
+
+- `chroma_db/`  
+  Local generated vector index after ingestion. Not tracked in the repository.
+
+- `ingest.py`  
+  Loads documents, chunks them, generates embeddings, and stores them in ChromaDB.
+
+- `retriever.py`  
+  Retrieves top-k relevant chunks for a query.
+
+- `router.py`  
+  Assigns one of the three answer modes based on retrieval strength.
+
+- `answerer.py`  
+  Builds context from retrieved chunks and generates the final answer using the LLM API.
+
+- `app.py`  
+  Provides the Streamlit interface.
+
+- `.env`  
+  Local API credentials file. Not tracked in the repository.
+
+## Setup
+
+### 1. Clone the repository
+
+```bash
 git clone <your-repo-url>
-cd hybrid-math-reading-assistant
-2. Create a virtual environment
+cd hybrid-reading-assistant
+```
+### 2. Create a virtual environment
 
 On Windows PowerShell:
 
+```PowerShell
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install --upgrade pip
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-3. Configure your API key
+```
+
+## 3. Configure your API key
 
 Create a .env file in the project root:
 
+```env
 DEEPSEEK_API_KEY=your_api_key_here
-4. Add documents
+```
+
+## 4. Add documents
 
 Put your papers / notes into the data/ folder.
 
-How to use
-Step 1: Build the document index
+## How to use
+
+## Step 1: Build the document index
+
+```PowerShell
 .\.venv\Scripts\python.exe ingest.py
+```
 
 This will:
 
-load documents from data/
-chunk them
-generate embeddings
-store them in chroma_db/
-Step 2: Launch the app
+- load documents from `data/`
+- chunk them
+- generate embeddings
+- store them in `chroma_db/`
+
+## Step 2: Launch the app
+
+```PowerShell
 .\.venv\Scripts\python.exe -m streamlit run app.py
+```
 
 Then open the local URL shown in the terminal, usually:
 
+```
 http://localhost:8501
-Step 3: Ask questions
+```
+
+## Step 3: Ask questions
 
 You can ask questions such as:
 
-What is exchangeability?
-What is the Chinese Restaurant Process?
-exchangeable怎么定义的
-Explain this concept in plain language
+- `What is exchangeability?`
+- `What is the Chinese Restaurant Process?`
+- `exchangeable怎么定义的`
+- `Explain this concept in plain language`
 
 You can also choose:
 
-Answer style
-Technical
-Plain-language
-whether to Include a simple example
-Switching to a new document domain
+- Answer style
+   - `Technical`
+   - `Plain-language`
+- whether to Include a simple example
+---
+
+## Switching to a new document domain
 
 This project is designed to be reusable across different document collections.
 
 For example, you can replace the current papers with:
 
-number theory papers
-graph theory papers
-biology papers
-physics papers
-your own lecture notes or thesis drafts
-To switch to a new document library
-Replace the files in data/
-Delete the old chroma_db/
+- number theory papers
+- graph theory papers
+- biology papers
+- physics papers
+- your own lecture notes or thesis drafts
+
+### To switch to a new document library
+
+- Replace the files in `data/`
+- Delete the old `chroma_db/`
 Re-run:
+```PowerShell
 .\.venv\Scripts\python.exe ingest.py
-Launch the app again:
+```
+
+- Launch the app again:
+
+```PowerShell
 .\.venv\Scripts\python.exe -m streamlit run app.py
-Example workflow
-Continue querying with the current library
+```
+---
+## Example workflow
+### Continue querying with the current library
+```PowerSell
 .\.venv\Scripts\python.exe -m streamlit run app.py
-Rebuild after changing the library
+```
+### Rebuild after changing the library
+```PowerShell
 .\.venv\Scripts\python.exe ingest.py
 .\.venv\Scripts\python.exe -m streamlit run app.py
-Current limitations
-chunking is currently simple character-based chunking
-routing is based on hand-tuned distance thresholds
-no reranker is used yet
-no full evaluation pipeline yet
-PDF extraction quality may vary depending on document format
-formula-heavy papers may still need better formatting and chunking strategies
-text-based academic documents work best in the current version
-Planned improvements
+```
+---
+## Current limitations
+- chunking is currently simple character-based chunking
+- routing is based on hand-tuned distance thresholds
+- no reranker is used yet
+- no full evaluation pipeline yet
+- PDF extraction quality may vary depending on document format
+- formula-heavy papers may still need better formatting and chunking strategies
+- text-based academic documents work best in the current version
+---
+
+## Planned improvements
 
 Possible next steps include:
 
-better chunking strategies
-reranking
-document-level filtering
-evaluation sheet / failure logging
-improved math formatting
-question history
-local model backend option
-better support for cross-domain academic libraries
-Status
+- better chunking strategies
+- reranking
+- document-level filtering
+- evaluation sheet / failure logging
+- improved math formatting
+- question history
+- local model backend option
+- better support for cross-domain academic libraries
+
+---
+## Status
 
 This is an MVP / early v1.1 version of the project.
 
 Current supported capabilities include:
 
-local document ingestion
-semantic retrieval
-answer generation
-routing-aware answering
-retrieved snippet display
-technical vs plain-language answer styles
-optional simple examples
-bilingual usage with English / Chinese queries
+- local document ingestion
+- semantic retrieval
+- answer generation
+- routing-aware answering
+- retrieved snippet display
+- technical vs plain-language answer styles
+- optional simple examples
+- bilingual usage with English / Chinese queries
